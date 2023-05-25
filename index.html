@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>GoCar Profit Calculator</title>
+    <!-- include bootstrap css -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap-dark.min.css">
+    <link href="style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body class="bg-dark text-light">
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">GoCar Profit Calculator</a>
+          <span class="navbar-text">
+            <span class="car">&#128663;</span>
+          </span>
+        </div>
+      </nav>
+    <form>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="gross-revenue">Gross Revenue (Rp):</label>
+                    <input type="number" id="gross-revenue" name="gross-revenue" class="form-control" placeholder="e.g 400000">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="distance-travelled">Distance Travelled (KM):</label>
+                    <input type="number" id="distance-travelled" name="distance-travelled" class="form-control" placeholder="e.g 165">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="average-fuel-consumption">Average Fuel Consumption (KM/L):</label>
+                    <input type="number" id="average-fuel-consumption" name="average-fuel-consumption"
+                        class="form-control" placeholder="e.g 11.6">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="fuel-price">Fuel Price (Rp):</label>
+                    <input type="number" id="fuel-price" name="fuel-price" value="10000"
+                        class="form-control disabledByDefault" disabled>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="car-maintenance-cost">Car Maintenance Cost (%):</label>
+                    <input type="number" id="car-maintenance-cost" name="car-maintenance-cost" value="10"
+                        class="form-control disabledByDefault" disabled>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="car-owner-share">Car Owner Share (%):</label>
+                            <input type="number" id="car-owner-share" name="car-owner-share" value="50"
+                                class="form-control disabledByDefault" disabled>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="car-driver-share">Car Driver Share (%):</label>
+                            <input type="number" id="car-driver-share" name="car-driver-share" value="50"
+                                class="form-control disabledByDefault" disabled>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input type="button" class="btn btn-primary" value="Calculate" onclick="calculateProfit()">
+                            <input type="button" class="btn btn-secondary" value="Load sample" onclick="LoadSample()">
+                        </div>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <div class="form-group">
+                            <input type="checkbox" id="unlock" name="unlock" onclick="unlockFields()"> Unlock all fields
+                            <input type="checkbox" id="hide" name="hide" onclick="hideDisabledFields()" checked> Hide
+                            disabled
+                            fields
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <br>
+    <div id="result"></div>
+
+    <script>
+        function calculateProfit() {
+            var grossRevenue = parseFloat(document.getElementById("gross-revenue").value);
+            var distanceTravelled = parseFloat(document.getElementById("distance-travelled").value);
+            var averageFuelConsumption = parseFloat(document.getElementById("average-fuel-consumption").value);
+            var fuelPrice = parseFloat(document.getElementById("fuel-price").value);
+            var carMaintenanceCost = parseFloat(document.getElementById("car-maintenance-cost").value);
+            var ownerShare = parseFloat(document.getElementById("car-owner-share").value);
+            var driverShare = parseFloat(document.getElementById("car-driver-share").value);
+
+            if (isNaN(grossRevenue) || isNaN(distanceTravelled) || isNaN(averageFuelConsumption)) {
+                document.getElementById("result").innerHTML = "<div class='alert alert-danger'>Please fill all the fields with valid numbers</div>";
+                if (isNaN(grossRevenue)) {
+                    document.getElementById("gross-revenue").classList.add("is-invalid");
+                } else {
+                    document.getElementById("gross-revenue").classList.remove("is-invalid");
+                }
+                if (isNaN(distanceTravelled)) {
+                    document.getElementById("distance-travelled").classList.add("is-invalid");
+                } else {
+                    document.getElementById("distance-travelled").classList.remove("is-invalid");
+                }
+                if (isNaN(averageFuelConsumption)) {
+                    document.getElementById("average-fuel-consumption").classList.add("is-invalid");
+                } else {
+                    document.getElementById("average-fuel-consumption").classList.remove("is-invalid");
+                }
+                return;
+            }
+
+            var fuelCost = distanceTravelled / averageFuelConsumption * fuelPrice;
+            var grossIncome = grossRevenue - fuelCost;
+            var maintenanceCost = (grossIncome * carMaintenanceCost) / 100;
+            var netIncome = grossIncome - maintenanceCost;
+            var ownerIncome = (netIncome * ownerShare) / 100;
+            var driverIncome = (netIncome * driverShare) / 100;
+
+            const table = document.createElement("table");
+            table.classList.add("table");
+            table.classList.add("table-dark");
+
+            const thead = document.createElement("thead");
+            const tr = document.createElement("tr");
+
+            const th1 = document.createElement("th");
+            th1.textContent = "Income Type";
+
+            const th2 = document.createElement("th");
+            th2.textContent = "Amount (Rp)";
+
+            tr.appendChild(th1);
+            tr.appendChild(th2);
+            thead.appendChild(tr);
+            table.appendChild(thead);
+
+            const tbody = document.createElement("tbody");
+
+            addRow(tbody, "Fuel Cost", "Rp", addThousandSeparator(fuelCost));
+            addRow(tbody, "Gross Income", "Rp", addThousandSeparator(grossIncome));
+            addRow(tbody, "Maintenance Cost", "Rp", addThousandSeparator(maintenanceCost));
+            addRow(tbody, "Net Income", "Rp", addThousandSeparator(netIncome));
+            addRow(tbody, "Owner Income", "Rp", addThousandSeparator(ownerIncome));
+            addRow(tbody, "Driver Income", "Rp", addThousandSeparator(driverIncome));
+
+            table.appendChild(tbody);
+
+            document.getElementById("result").innerHTML = "";
+            document.getElementById("result").appendChild(table);
+        }
+
+        function addThousandSeparator(num) {
+            num = Math.round(num);
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        function addRow(tbody, name, unit, value) {
+            const row = document.createElement("tr");
+            const rowtd1 = document.createElement("td");
+            rowtd1.textContent = name;
+            const rowtd2 = document.createElement("td");
+            rowtd2.classList.add("text-right");
+            rowtd2.textContent = unit + " " + value;
+            row.appendChild(rowtd1);
+            row.appendChild(rowtd2);
+            tbody.appendChild(row);
+        }
+
+        function LoadSample() {
+            document.getElementById("gross-revenue").value = 400000;
+            document.getElementById("distance-travelled").value = 200;
+            document.getElementById("average-fuel-consumption").value = 10;
+            calculateProfit();
+        }
+        function unlockFields() {
+            var inputs = document.querySelectorAll('input.disabledByDefault');
+            for (var i = 0; i < inputs.length; i++) {
+                if (inputs[i].disabled) {
+                    inputs[i].disabled = false;
+                } else {
+                    inputs[i].disabled = true;
+                }
+            }
+        }
+        function hideDisabledFields() {
+            if (document.getElementById("hide").checked == true) {
+                // Get all disabled fields
+                var disabledFields = document.querySelectorAll('input:disabled');
+
+                // Loop through each disabled field
+                for (var i = 0; i < disabledFields.length; i++) {
+                    // Find the closest parent element with class "row"
+                    var row = disabledFields[i].closest('.row');
+
+                    // Hide the row
+                    if (row) {
+                        row.style.display = "none";
+                    }
+                }
+            } else {
+                // Get all rows that were previously hidden
+                var hiddenRows = document.querySelectorAll('.row[style="display: none;"]');
+
+                // Loop through each hidden row
+                for (var i = 0; i < hiddenRows.length; i++) {
+                    // Show the row
+                    hiddenRows[i].style.display = "flex";
+                }
+            }
+        }
+        hideDisabledFields();
+    </script>
+</body>
+
+</html>
