@@ -10,20 +10,20 @@
 </head>
 
 <body class="bg-dark text-light">
-    <nav class="navbar navbar-dark bg-dark">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">GoCar Profit Calculator</a>
-          <span class="navbar-text">
-            <span class="car">&#128663;</span>
-          </span>
-        </div>
-      </nav>
+    <!-- Image and text -->
+    <nav class="navbar fixed-top navbar-dark bg-primary">
+        <a class="navbar-brand" href="#">
+            GoCar Profit Calculator
+        </a>
+        <h5 class="navbar-text">🚗 💰 🤑</h5>
+    </nav>
     <form>
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="gross-revenue">Gross Revenue (Rp):</label>
-                    <input type="number" id="gross-revenue" name="gross-revenue" class="form-control" placeholder="e.g 400000">
+                    <input type="number" id="gross-revenue" name="gross-revenue" class="form-control"
+                        placeholder="e.g 400000">
                 </div>
             </div>
         </div>
@@ -31,7 +31,8 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="distance-travelled">Distance Travelled (KM):</label>
-                    <input type="number" id="distance-travelled" name="distance-travelled" class="form-control" placeholder="e.g 165">
+                    <input type="number" id="distance-travelled" name="distance-travelled" class="form-control"
+                        placeholder="e.g 165">
                 </div>
             </div>
         </div>
@@ -44,6 +45,32 @@
                 </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="parking-expense">Parking Expense:</label>
+                <input type="number" id="parking-expense" name="parking-expense" class="form-control" placeholder="e.g 10000">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="toll-expense">Toll Expense:</label>
+                <input type="number" id="toll-expense" name="toll-expense" class="form-control" placeholder="e.g 5000">
+              </div>
+            </div>
+          </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="cash-on-driver">Cash on Driver:</label>
+                    <input type="number" id="cash-on-driver" name="cash-on-driver" class="form-control"
+                        placeholder="e.g 500000">
+                </div>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
@@ -88,15 +115,20 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <input type="button" class="btn btn-primary" value="Calculate" onclick="calculateProfit()">
-                            <input type="button" class="btn btn-secondary" value="Load sample" onclick="LoadSample()">
+                            <input id="secButton" type="button" class="btn btn-secondary" value="Load sample"
+                                onclick="LoadSample()">
                         </div>
                     </div>
                     <div class="col-md-6 text-right">
                         <div class="form-group">
-                            <input type="checkbox" id="unlock" name="unlock" onclick="unlockFields()"> Unlock all fields
-                            <input type="checkbox" id="hide" name="hide" onclick="hideDisabledFields()" checked> Hide
-                            disabled
-                            fields
+                            <label for="unlock">
+                                <input type="checkbox" id="unlock" name="unlock" onclick="unlockFields()"> Unlock all
+                                fields
+                            </label>
+                            <label for="hide">
+                                <input type="checkbox" id="hide" name="hide" onclick="hideDisabledFields()" checked>
+                                Hide disabled fields
+                            </label>
                         </div>
                     </div>
                 </div>
@@ -111,6 +143,9 @@
             var grossRevenue = parseFloat(document.getElementById("gross-revenue").value);
             var distanceTravelled = parseFloat(document.getElementById("distance-travelled").value);
             var averageFuelConsumption = parseFloat(document.getElementById("average-fuel-consumption").value);
+            var parkingExpense = parseFloat(document.getElementById("parking-expense").value) || 0;
+            var tollExpense = parseFloat(document.getElementById("toll-expense").value) || 0;
+            var cashOnDriver = parseFloat(document.getElementById("cash-on-driver").value) || 0;
             var fuelPrice = parseFloat(document.getElementById("fuel-price").value);
             var carMaintenanceCost = parseFloat(document.getElementById("car-maintenance-cost").value);
             var ownerShare = parseFloat(document.getElementById("car-owner-share").value);
@@ -137,11 +172,13 @@
             }
 
             var fuelCost = distanceTravelled / averageFuelConsumption * fuelPrice;
-            var grossIncome = grossRevenue - fuelCost;
+            var grossIncome = grossRevenue - fuelCost - parkingExpense - tollExpense;
             var maintenanceCost = (grossIncome * carMaintenanceCost) / 100;
             var netIncome = grossIncome - maintenanceCost;
             var ownerIncome = (netIncome * ownerShare) / 100;
             var driverIncome = (netIncome * driverShare) / 100;
+            var transferToOwner = ownerIncome + cashOnDriver;
+            var transferToDriver = driverIncome - cashOnDriver;
 
             const table = document.createElement("table");
             table.classList.add("table");
@@ -167,8 +204,10 @@
             addRow(tbody, "Gross Income", "Rp", addThousandSeparator(grossIncome));
             addRow(tbody, "Maintenance Cost", "Rp", addThousandSeparator(maintenanceCost));
             addRow(tbody, "Net Income", "Rp", addThousandSeparator(netIncome));
-            addRow(tbody, "Owner Income", "Rp", addThousandSeparator(ownerIncome));
-            addRow(tbody, "Driver Income", "Rp", addThousandSeparator(driverIncome));
+            // addRow(tbody, "Owner Income", "Rp", addThousandSeparator(ownerIncome));
+            // addRow(tbody, "Driver Income", "Rp", addThousandSeparator(driverIncome));
+            addRow(tbody, "Transfer to Owner", "Rp", addThousandSeparator(transferToOwner));
+            addRow(tbody, "Transfer to Driver", "Rp", addThousandSeparator(transferToDriver));
 
             table.appendChild(tbody);
 
@@ -198,6 +237,16 @@
             document.getElementById("distance-travelled").value = 200;
             document.getElementById("average-fuel-consumption").value = 10;
             calculateProfit();
+            monitorFields();
+        }
+        function clear() {
+            var enabledFields = document.querySelectorAll('input[type="number"]:not(.disabledByDefault)');
+            enabledFields.forEach(function (field) {
+                field.value = "";
+                field.classList.remove("is-invalid");
+            });
+            document.getElementById("result").innerHTML = "";
+            monitorFields();
         }
         function unlockFields() {
             var inputs = document.querySelectorAll('input.disabledByDefault');
@@ -236,6 +285,30 @@
             }
         }
         hideDisabledFields();
+
+        function monitorFields() {
+            var enabledFields = document.querySelectorAll('input[type="number"]:not(.disabledByDefault)');
+            var button = document.getElementById("secButton");
+
+            // loop through all enabled fields
+            for (var i = 0; i < enabledFields.length; i++) {
+                // if any of the enabled fields are not empty, change the button to "Clear"
+                if (enabledFields[i].value !== "") {
+                    button.value = "Clear";
+                    button.onclick = clear;
+                    return;
+                }
+            }
+
+            button.value = "Load Sample";
+            button.onclick = LoadSample;
+        }
+
+        // Call the monitorFields function whenever the value of an enabled field changes
+        document.querySelectorAll('input:not(.disabledByDefault)').forEach(function (field) {
+            field.addEventListener("change", monitorFields);
+        });
+
     </script>
 </body>
 
