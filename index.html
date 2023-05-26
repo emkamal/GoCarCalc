@@ -18,7 +18,7 @@
         </a>
         <h4 class="navbar-text">🚗</h4>
     </nav>
-    <form class="mainForm">
+    <form id="mainForm">
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
@@ -141,16 +141,17 @@
         </div>
         <div class="fixed-bottom bottomBar">
             <div class="container-fluid">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <input type="button" class="btn btn-primary" value="Calculate" onclick="calculateProfit()">
-                    <input id="secButton" type="button" class="btn btn-secondary" value="Load sample" onclick="LoadSample()">
-                  </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <input type="button" class="btn btn-primary" value="Calculate" onclick="calculateProfit()">
+                            <input id="secButton" type="button" class="btn btn-secondary" value="Load sample"
+                                onclick="LoadSample()">
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
+        </div>
     </form>
     <br>
     <div id="result"></div>
@@ -279,8 +280,7 @@
             document.getElementById("result").innerHTML = "";
             document.getElementById("result").appendChild(table);
             document.getElementById("result").appendChild(table2);
-
-            // scroll to result area
+            document.getElementById("result").style.opacity = 1;
             document.getElementById("result").scrollIntoView({ behavior: "smooth" });
 
             // create a button element with class btn and btn-primary and text "Save Data", the action should be to store all the data above to a local file using File API
@@ -366,8 +366,20 @@
                 field.value = "";
                 field.classList.remove("is-invalid");
             });
-            document.getElementById("result").innerHTML = "";
+            const result = document.getElementById("result");
+            result.style.opacity = 1;
+
+            const fadeEffect = setInterval(function () {
+                if (result.style.opacity > 0) {
+                    result.style.opacity -= 0.1;
+                } else {
+                    clearInterval(fadeEffect);
+                    result.innerHTML = "";
+                }
+            }, 50);
             monitorFields();
+            document.documentElement.scrollIntoView({ behavior: "smooth" });
+
         }
         function unlockFields() {
             var inputs = document.querySelectorAll('input.disabledByDefault');
