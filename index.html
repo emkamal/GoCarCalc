@@ -4,7 +4,8 @@
 <head>
     <title>GoCar Profit Calculator</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤑</text></svg>">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤑</text></svg>">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap-dark.min.css">
     <link href="style.css" rel="stylesheet" type="text/css">
@@ -15,7 +16,7 @@
         <a class="navbar-brand" href="#">
             GoCar Profit Calculator
         </a>
-        <h5 class="navbar-text">🚗 💰 🤑</h5>
+        <h4 class="navbar-text">🚗</h4>
     </nav>
     <form>
         <div class="row">
@@ -24,6 +25,15 @@
                     <label for="gross-revenue">Gross Revenue (Rp):</label>
                     <input type="number" id="gross-revenue" name="gross-revenue" class="form-control"
                         placeholder="e.g 400000">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="kept-deposit">Kept Deposit (Rp):</label>
+                    <input type="number" id="kept-deposit" name="kept-deposit" class="form-control"
+                        placeholder="e.g 10000">
                 </div>
             </div>
         </div>
@@ -48,18 +58,20 @@
 
         <div class="row">
             <div class="col-md-6">
-              <div class="form-group">
-                <label for="parking-expense">Parking Expense:</label>
-                <input type="number" id="parking-expense" name="parking-expense" class="form-control" placeholder="e.g 10000">
-              </div>
+                <div class="form-group">
+                    <label for="parking-expense">Parking Expense:</label>
+                    <input type="number" id="parking-expense" name="parking-expense" class="form-control"
+                        placeholder="e.g 10000">
+                </div>
             </div>
             <div class="col-md-6">
-              <div class="form-group">
-                <label for="toll-expense">Toll Expense:</label>
-                <input type="number" id="toll-expense" name="toll-expense" class="form-control" placeholder="e.g 5000">
-              </div>
+                <div class="form-group">
+                    <label for="toll-expense">Toll Expense:</label>
+                    <input type="number" id="toll-expense" name="toll-expense" class="form-control"
+                        placeholder="e.g 5000">
+                </div>
             </div>
-          </div>
+        </div>
 
         <div class="row">
             <div class="col-md-12">
@@ -141,6 +153,7 @@
     <script>
         function calculateProfit() {
             var grossRevenue = parseFloat(document.getElementById("gross-revenue").value);
+            var keptDeposit = parseFloat(document.getElementById("kept-deposit").value) || 0;
             var distanceTravelled = parseFloat(document.getElementById("distance-travelled").value);
             var averageFuelConsumption = parseFloat(document.getElementById("average-fuel-consumption").value);
             var parkingExpense = parseFloat(document.getElementById("parking-expense").value) || 0;
@@ -172,7 +185,7 @@
             }
 
             var fuelCost = distanceTravelled / averageFuelConsumption * fuelPrice;
-            var grossIncome = grossRevenue - fuelCost - parkingExpense - tollExpense;
+            var grossIncome = grossRevenue - fuelCost - keptDeposit - parkingExpense - tollExpense;
             var maintenanceCost = (grossIncome * carMaintenanceCost) / 100;
             var netIncome = grossIncome - maintenanceCost;
             var ownerIncome = (netIncome * ownerShare) / 100;
@@ -188,7 +201,7 @@
             const tr = document.createElement("tr");
 
             const th1 = document.createElement("th");
-            th1.textContent = "Income Type";
+            th1.textContent = "Account";
 
             const th2 = document.createElement("th");
             th2.textContent = "Amount (Rp)";
@@ -200,19 +213,111 @@
 
             const tbody = document.createElement("tbody");
 
-            addRow(tbody, "Fuel Cost", "Rp", addThousandSeparator(fuelCost));
-            addRow(tbody, "Gross Income", "Rp", addThousandSeparator(grossIncome));
-            addRow(tbody, "Maintenance Cost", "Rp", addThousandSeparator(maintenanceCost));
-            addRow(tbody, "Net Income", "Rp", addThousandSeparator(netIncome));
-            // addRow(tbody, "Owner Income", "Rp", addThousandSeparator(ownerIncome));
-            // addRow(tbody, "Driver Income", "Rp", addThousandSeparator(driverIncome));
-            addRow(tbody, "Transfer to Owner", "Rp", addThousandSeparator(transferToOwner));
-            addRow(tbody, "Transfer to Driver", "Rp", addThousandSeparator(transferToDriver));
+            addRow(tbody, "⛽ Fuel Cost", "Rp", addThousandSeparator(fuelCost));
+            addRow(tbody, "💰 Gross Income", "Rp", addThousandSeparator(grossIncome));
+            addRow(tbody, "🛠️ Maintenance Cost", "Rp", addThousandSeparator(maintenanceCost));
+            addRow(tbody, "🤑 Net Income", "Rp", addThousandSeparator(netIncome), ["bg-success", "mainInfoRow"]);
 
             table.appendChild(tbody);
 
+            // create another table
+            const table2 = document.createElement("table");
+            table2.classList.add("table");
+            table2.classList.add("table-dark");
+
+            // create thead with 2 columns, first one is Owner, second one is Driver
+            const thead2 = document.createElement("thead");
+            const tr2 = document.createElement("tr");
+            const th20 = document.createElement("th");
+            th20.textContent = "";
+            const th21 = document.createElement("th");
+            th21.textContent = "Owner";
+            const th22 = document.createElement("th");
+            th22.textContent = "Driver";
+            tr2.appendChild(th20);
+            tr2.appendChild(th21);
+            tr2.appendChild(th22);
+            thead2.appendChild(tr2);
+            table2.appendChild(thead2);
+
+            // create tbody with 2 columns, first one is Transfer to Owner, second one is Transfer to Driver
+            const tbody2 = document.createElement("tbody");
+            // create row with 3 columns, the first column says "Income", the second column contain Owner income, the third column contain Driver income
+            const tr20 = document.createElement("tr");
+            const td20 = document.createElement("td");
+            td20.textContent = "Income";
+            const td21 = document.createElement("td");
+            td21.textContent = addThousandSeparator(ownerIncome);
+            const td22 = document.createElement("td");
+            td22.textContent = addThousandSeparator(driverIncome);
+            tr20.appendChild(td20);
+            tr20.appendChild(td21);
+            tr20.appendChild(td22);
+            tbody2.appendChild(tr20);
+
+            const tr21 = document.createElement("tr");
+            tr21.classList.add("bg-primary", "mainInfoRow");
+            const td23 = document.createElement("td");
+            td23.textContent = "Transfer to";
+            const td24 = document.createElement("td");
+            td24.textContent = addThousandSeparator(transferToOwner);
+            const td25 = document.createElement("td");
+            td25.textContent = addThousandSeparator(transferToDriver);
+            tr21.appendChild(td23);
+            tr21.appendChild(td24);
+            tr21.appendChild(td25);
+            tbody2.appendChild(tr21);
+
+            table2.appendChild(tbody2);
+
+
             document.getElementById("result").innerHTML = "";
             document.getElementById("result").appendChild(table);
+            document.getElementById("result").appendChild(table2);
+
+            // create a button element with class btn and btn-primary and text "Save Data", the action should be to store all the data above to a local file using File API
+            const saveButton = document.createElement("button");
+            saveButton.classList.add("btn");
+            saveButton.classList.add("btn-primary");
+            saveButton.textContent = "Save Data";
+            saveButton.addEventListener("click", function () {
+                const data = {
+                    grossRevenue: grossRevenue,
+                    distanceTravelled: distanceTravelled,
+                    averageFuelConsumption: averageFuelConsumption,
+                    parkingExpense: parkingExpense,
+                    tollExpense: tollExpense,
+                    cashOnDriver: cashOnDriver,
+                    fuelPrice: fuelPrice,
+                    carMaintenanceCost: carMaintenanceCost,
+                    ownerShare: ownerShare,
+                    driverShare: driverShare
+                };
+
+                saveDataToFile(data);
+                // const blob = new Blob([JSON.stringify(data)], { type: "application/json" });
+                // const url = URL.createObjectURL(blob);
+                // const a = document.createElement("a");
+                // a.href = url;
+                // a.download = "data.json";
+                // a.click();
+            });
+            // document.getElementById("result").appendChild(saveButton);
+        }
+
+        function saveDataToFile(data) {
+            var file = new File([data], "data.txt", { type: "text/plain" });
+            var writer = new FileWriter();
+
+            writer.onwriteend = function () {
+                console.log("Data saved to file.");
+            };
+
+            writer.onerror = function () {
+                console.error("Error saving data to file.");
+            };
+
+            writer.write(file);
         }
 
         function addThousandSeparator(num) {
@@ -220,8 +325,16 @@
             return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
 
-        function addRow(tbody, name, unit, value) {
+        function addRow(tbody, name, unit, value, className) {
             const row = document.createElement("tr");
+            if (className) {
+                if (typeof className === "string") {
+                    className = [className];
+                }
+                className.forEach(function (className) {
+                    row.classList.add(className);
+                });
+            }
             const rowtd1 = document.createElement("td");
             rowtd1.textContent = name;
             const rowtd2 = document.createElement("td");
@@ -307,6 +420,15 @@
         // Call the monitorFields function whenever the value of an enabled field changes
         document.querySelectorAll('input:not(.disabledByDefault)').forEach(function (field) {
             field.addEventListener("change", monitorFields);
+        });
+
+        // add keyup event listener to all fields where if the user press ctrl+enter, the calculateProfit function will be called
+        document.querySelectorAll('input[type="number"]').forEach(function (field) {
+            field.addEventListener("keyup", function (event) {
+                if (event.ctrlKey && event.key === "Enter") {
+                    calculateProfit();
+                }
+            });
         });
 
     </script>
