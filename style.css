@@ -16,9 +16,9 @@ thead tr th {
     background-color: rgba(0, 0, 0, 0.95);
     padding: 20px 0 0;
 }
-.mainForm{
+#mainForm{
     margin: 0 0 50px;
 }
 div#result {
-    margin: 0 0 150px;
+    margin: 0 0 400px;
 }
