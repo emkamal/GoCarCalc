@@ -337,11 +337,11 @@
             // append the urlParams to the current url with # symbol
             window.location.hash = urlParams.toString();
 
-            // add share url button to result div
+            // add share button to result div
             const shareButton = document.createElement("button");
             shareButton.classList.add("btn");
             shareButton.classList.add("btn-primary");
-            shareButton.textContent = "Share URL";
+            shareButton.textContent = "Share Calculation Result";
             shareButton.addEventListener("click", async function () {
                 if (navigator.share) {
                     try {
