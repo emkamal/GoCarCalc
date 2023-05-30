@@ -21,25 +21,27 @@
     <form id="mainForm">
         <div class="row">
             <div class="col col-md-12">
-              <div class="form-group">
-                <label for="gopay-revenue">Gopay Revenue (Rp):</label>
-                <input type="number" id="gopay-revenue" name="gopay-revenue" class="form-control" placeholder="e.g 250000">
-              </div>
+                <div class="form-group">
+                    <label for="gopayRevenue">Gopay Revenue (Rp):</label>
+                    <input type="number" id="gopayRevenue" name="gopayRevenue" class="form-control"
+                        placeholder="e.g 250000">
+                </div>
             </div>
-          </div>
-        <div class="row">
-            <div class="col col-md-12">
-              <div class="form-group">
-                <label for="cash-revenue">Cash Revenue (Rp):</label>
-                <input type="number" id="cash-revenue" name="cash-revenue" class="form-control" placeholder="e.g 150000">
-              </div>
-            </div>
-          </div>
+        </div>
         <div class="row">
             <div class="col col-md-12">
                 <div class="form-group">
-                    <label for="kept-deposit">Kept Deposit (Rp):</label>
-                    <input type="number" id="kept-deposit" name="kept-deposit" class="form-control disabledByDefault"
+                    <label for="cashRevenue">Cash Revenue (Rp):</label>
+                    <input type="number" id="cashRevenue" name="cashRevenue" class="form-control"
+                        placeholder="e.g 150000">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col col-md-12">
+                <div class="form-group">
+                    <label for="keptDeposit">Kept Deposit (Rp):</label>
+                    <input type="number" id="keptDeposit" name="keptDeposit" class="form-control disabledByDefault"
                         placeholder="e.g 10000" disabled>
                 </div>
             </div>
@@ -47,8 +49,8 @@
         <div class="row">
             <div class="col col-md-12">
                 <div class="form-group">
-                    <label for="distance-travelled">Distance Travelled (KM):</label>
-                    <input type="number" id="distance-travelled" name="distance-travelled" class="form-control"
+                    <label for="distanceTravelled">Distance Travelled (KM):</label>
+                    <input type="number" id="distanceTravelled" name="distanceTravelled" class="form-control"
                         placeholder="e.g 165">
                 </div>
             </div>
@@ -56,9 +58,9 @@
         <div class="row">
             <div class="col col-md-12">
                 <div class="form-group">
-                    <label for="average-fuel-consumption">Average Fuel Consumption (KM/L):</label>
-                    <input type="number" id="average-fuel-consumption" name="average-fuel-consumption"
-                        class="form-control" placeholder="e.g 11.6">
+                    <label for="averageFuelConsumption">Average Fuel Consumption (KM/L):</label>
+                    <input type="number" id="averageFuelConsumption" name="averageFuelConsumption" class="form-control"
+                        placeholder="e.g 11.6">
                 </div>
             </div>
         </div>
@@ -66,15 +68,15 @@
         <div class="row">
             <div class="col col-md-6">
                 <div class="form-group">
-                    <label for="parking-expense">Parking Expense:</label>
-                    <input type="number" id="parking-expense" name="parking-expense" class="form-control"
+                    <label for="parkingExpense">Parking Expense:</label>
+                    <input type="number" id="parkingExpense" name="parkingExpense" class="form-control"
                         placeholder="e.g 10000">
                 </div>
             </div>
             <div class="col col-md-6">
                 <div class="form-group">
-                    <label for="toll-expense">Toll Expense:</label>
-                    <input type="number" id="toll-expense" name="toll-expense" class="form-control"
+                    <label for="tollExpense">Toll Expense:</label>
+                    <input type="number" id="tollExpense" name="tollExpense" class="form-control"
                         placeholder="e.g 5000">
                 </div>
             </div>
@@ -83,8 +85,8 @@
         <div class="row">
             <div class="col col-md-12">
                 <div class="form-group">
-                    <label for="fuel-price">Fuel Price (Rp):</label>
-                    <input type="number" id="fuel-price" name="fuel-price" value="10000"
+                    <label for="fuelPrice">Fuel Price (Rp):</label>
+                    <input type="number" id="fuelPrice" name="fuelPrice" value="10000"
                         class="form-control disabledByDefault" disabled>
                 </div>
             </div>
@@ -92,8 +94,8 @@
         <div class="row">
             <div class="col col-md-12">
                 <div class="form-group">
-                    <label for="car-maintenance-cost">Car Maintenance Cost (%):</label>
-                    <input type="number" id="car-maintenance-cost" name="car-maintenance-cost" value="10"
+                    <label for="carMaintenanceCost">Car Maintenance Cost (%):</label>
+                    <input type="number" id="carMaintenanceCost" name="carMaintenanceCost" value="10"
                         class="form-control disabledByDefault" disabled>
                 </div>
             </div>
@@ -103,15 +105,15 @@
                 <div class="row">
                     <div class="col col-md-6">
                         <div class="form-group">
-                            <label for="car-owner-share">Car Owner Share (%):</label>
-                            <input type="number" id="car-owner-share" name="car-owner-share" value="50"
+                            <label for="carOwnerShare">Car Owner Share (%):</label>
+                            <input type="number" id="carOwnerShare" name="carOwnerShare" value="50"
                                 class="form-control disabledByDefault" disabled>
                         </div>
                     </div>
                     <div class="col col-md-6">
                         <div class="form-group">
-                            <label for="car-driver-share">Car Driver Share (%):</label>
-                            <input type="number" id="car-driver-share" name="car-driver-share" value="50"
+                            <label for="carDriverShare">Car Driver Share (%):</label>
+                            <input type="number" id="carDriverShare" name="carDriverShare" value="50"
                                 class="form-control disabledByDefault" disabled>
                         </div>
                     </div>
@@ -155,34 +157,34 @@
 
     <script>
         function calculateProfit() {
-            var gopayRevenue = parseFloat(document.getElementById("gopay-revenue").value);
-            var cashRevenue = parseFloat(document.getElementById("cash-revenue").value) || 0;
-            var keptDeposit = parseFloat(document.getElementById("kept-deposit").value) || 0;
-            var distanceTravelled = parseFloat(document.getElementById("distance-travelled").value);
-            var averageFuelConsumption = parseFloat(document.getElementById("average-fuel-consumption").value);
-            var parkingExpense = parseFloat(document.getElementById("parking-expense").value) || 0;
-            var tollExpense = parseFloat(document.getElementById("toll-expense").value) || 0;
-            var fuelPrice = parseFloat(document.getElementById("fuel-price").value);
-            var carMaintenanceCost = parseFloat(document.getElementById("car-maintenance-cost").value);
-            var ownerShare = parseFloat(document.getElementById("car-owner-share").value);
-            var driverShare = parseFloat(document.getElementById("car-driver-share").value);
+            var gopayRevenue = parseFloat(document.getElementById("gopayRevenue").value);
+            var cashRevenue = parseFloat(document.getElementById("cashRevenue").value) || 0;
+            var keptDeposit = parseFloat(document.getElementById("keptDeposit").value) || 0;
+            var distanceTravelled = parseFloat(document.getElementById("distanceTravelled").value);
+            var averageFuelConsumption = parseFloat(document.getElementById("averageFuelConsumption").value);
+            var parkingExpense = parseFloat(document.getElementById("parkingExpense").value) || 0;
+            var tollExpense = parseFloat(document.getElementById("tollExpense").value) || 0;
+            var fuelPrice = parseFloat(document.getElementById("fuelPrice").value);
+            var carMaintenanceCost = parseFloat(document.getElementById("carMaintenanceCost").value);
+            var ownerShare = parseFloat(document.getElementById("carOwnerShare").value);
+            var driverShare = parseFloat(document.getElementById("carDriverShare").value);
 
             if (isNaN(gopayRevenue) || isNaN(distanceTravelled) || isNaN(averageFuelConsumption)) {
                 document.getElementById("result").innerHTML = "<div class='alert alert-danger'>Please fill all the fields with valid numbers</div>";
                 if (isNaN(gopayRevenue)) {
-                    document.getElementById("gopay-revenue").classList.add("is-invalid");
+                    document.getElementById("gopayRevenue").classList.add("is-invalid");
                 } else {
-                    document.getElementById("gopay-revenue").classList.remove("is-invalid");
+                    document.getElementById("gopayRevenue").classList.remove("is-invalid");
                 }
                 if (isNaN(distanceTravelled)) {
-                    document.getElementById("distance-travelled").classList.add("is-invalid");
+                    document.getElementById("distanceTravelled").classList.add("is-invalid");
                 } else {
-                    document.getElementById("distance-travelled").classList.remove("is-invalid");
+                    document.getElementById("distanceTravelled").classList.remove("is-invalid");
                 }
                 if (isNaN(averageFuelConsumption)) {
-                    document.getElementById("average-fuel-consumption").classList.add("is-invalid");
+                    document.getElementById("averageFuelConsumption").classList.add("is-invalid");
                 } else {
-                    document.getElementById("average-fuel-consumption").classList.remove("is-invalid");
+                    document.getElementById("averageFuelConsumption").classList.remove("is-invalid");
                 }
                 return;
             }
@@ -202,7 +204,7 @@
             var transferToOwnerFromCash = 0;
             var transferToDriverFromCash = 0;
 
-            if(ownerIncome < fundsOnPocket) {
+            if (ownerIncome < fundsOnPocket) {
                 transferToOwnerFromPocket = ownerIncome;
                 transferToOwnerFromCash = 0;
                 transferToDriverFromPocket = fundsOnPocket - ownerIncome;
@@ -318,6 +320,49 @@
             document.getElementById("result").style.opacity = 1;
             document.getElementById("result").scrollIntoView({ behavior: "smooth" });
 
+            // serialize all input data into a url parameter string
+            const urlParams = new URLSearchParams();
+
+            urlParams.append("gopayRevenue", gopayRevenue);
+            urlParams.append("cashRevenue", cashRevenue);
+            urlParams.append("distanceTravelled", distanceTravelled);
+            urlParams.append("averageFuelConsumption", averageFuelConsumption);
+            urlParams.append("parkingExpense", parkingExpense);
+            urlParams.append("tollExpense", tollExpense);
+            urlParams.append("fuelPrice", fuelPrice);
+            urlParams.append("carMaintenanceCost", carMaintenanceCost);
+            urlParams.append("ownerShare", ownerShare);
+            urlParams.append("driverShare", driverShare);
+
+            // append the urlParams to the current url with # symbol
+            window.location.hash = urlParams.toString();
+
+            // add share url button to result div
+            const shareButton = document.createElement("button");
+            shareButton.classList.add("btn");
+            shareButton.classList.add("btn-primary");
+            shareButton.textContent = "Share URL";
+            shareButton.addEventListener("click", async function () {
+                if (navigator.share) {
+                    try {
+                        await navigator.share({
+                            title: "GoCar Profit",
+                            text: "Here is my calculation for today's GoCar profit:",
+                            url: window.location.href
+                        });
+                        console.log("Content shared successfully.");
+                    } catch (error) {
+                        console.error("Error sharing content:", error);
+                    }
+                } else {
+                    console.warn("Web Share API not supported on this device.");
+                }
+            });
+            document.getElementById("result").appendChild(shareButton);
+
+
+
+
             // create a button element with class btn and btn-primary and text "Save Data", the action should be to store all the data above to a local file using File API
             const saveButton = document.createElement("button");
             saveButton.classList.add("btn");
@@ -388,10 +433,10 @@
         }
 
         function LoadSample() {
-            document.getElementById("gopay-revenue").value = 250000;
-            document.getElementById("cash-revenue").value = 150000;
-            document.getElementById("distance-travelled").value = 200;
-            document.getElementById("average-fuel-consumption").value = 10;
+            document.getElementById("gopayRevenue").value = 250000;
+            document.getElementById("cashRevenue").value = 150000;
+            document.getElementById("distanceTravelled").value = 200;
+            document.getElementById("averageFuelConsumption").value = 10;
             calculateProfit();
             monitorFields();
         }
@@ -414,7 +459,7 @@
             }, 50);
             monitorFields();
             document.documentElement.scrollIntoView({ behavior: "smooth" });
-
+            window.location.hash = "";
         }
         function unlockFields() {
             var inputs = document.querySelectorAll('input.disabledByDefault');
@@ -485,6 +530,30 @@
                 }
             });
         });
+
+        // if the url contains a hash
+        if (window.location.hash) {
+            // get and parse the hash
+            var hash = window.location.hash.substring(1);
+
+            const hashParams = new URLSearchParams(hash);
+
+            const hashData = {};
+
+            hashParams.forEach(function (value, key) {
+                hashData[key] = value;
+            });
+            // loop through each key in the hashData
+            for (var key in hashData) {
+                // if the key is a valid field id
+                if (document.getElementById(key)) {
+                    // set the value of the field to the value in the hash
+                    document.getElementById(key).value = hashData[key];
+                }
+            }
+            // calculate the profit
+            calculateProfit();
+        }
 
     </script>
 </body>
