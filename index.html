@@ -20,25 +20,32 @@
     </nav>
     <form id="mainForm">
         <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="gross-revenue">Gross Revenue (Rp):</label>
-                    <input type="number" id="gross-revenue" name="gross-revenue" class="form-control"
-                        placeholder="e.g 400000">
-                </div>
+            <div class="col col-md-12">
+              <div class="form-group">
+                <label for="gopay-revenue">Gopay Revenue (Rp):</label>
+                <input type="number" id="gopay-revenue" name="gopay-revenue" class="form-control" placeholder="e.g 250000">
+              </div>
             </div>
-        </div>
+          </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col col-md-12">
+              <div class="form-group">
+                <label for="cash-revenue">Cash Revenue (Rp):</label>
+                <input type="number" id="cash-revenue" name="cash-revenue" class="form-control" placeholder="e.g 150000">
+              </div>
+            </div>
+          </div>
+        <div class="row">
+            <div class="col col-md-12">
                 <div class="form-group">
                     <label for="kept-deposit">Kept Deposit (Rp):</label>
-                    <input type="number" id="kept-deposit" name="kept-deposit" class="form-control"
-                        placeholder="e.g 10000">
+                    <input type="number" id="kept-deposit" name="kept-deposit" class="form-control disabledByDefault"
+                        placeholder="e.g 10000" disabled>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col col-md-12">
                 <div class="form-group">
                     <label for="distance-travelled">Distance Travelled (KM):</label>
                     <input type="number" id="distance-travelled" name="distance-travelled" class="form-control"
@@ -47,7 +54,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col col-md-12">
                 <div class="form-group">
                     <label for="average-fuel-consumption">Average Fuel Consumption (KM/L):</label>
                     <input type="number" id="average-fuel-consumption" name="average-fuel-consumption"
@@ -57,14 +64,14 @@
         </div>
 
         <div class="row">
-            <div class="col-md-6">
+            <div class="col col-md-6">
                 <div class="form-group">
                     <label for="parking-expense">Parking Expense:</label>
                     <input type="number" id="parking-expense" name="parking-expense" class="form-control"
                         placeholder="e.g 10000">
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col col-md-6">
                 <div class="form-group">
                     <label for="toll-expense">Toll Expense:</label>
                     <input type="number" id="toll-expense" name="toll-expense" class="form-control"
@@ -74,17 +81,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="cash-on-driver">Cash on Driver:</label>
-                    <input type="number" id="cash-on-driver" name="cash-on-driver" class="form-control"
-                        placeholder="e.g 500000">
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
+            <div class="col col-md-12">
                 <div class="form-group">
                     <label for="fuel-price">Fuel Price (Rp):</label>
                     <input type="number" id="fuel-price" name="fuel-price" value="10000"
@@ -93,7 +90,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col col-md-12">
                 <div class="form-group">
                     <label for="car-maintenance-cost">Car Maintenance Cost (%):</label>
                     <input type="number" id="car-maintenance-cost" name="car-maintenance-cost" value="10"
@@ -102,16 +99,16 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col col-md-12">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col col-md-6">
                         <div class="form-group">
                             <label for="car-owner-share">Car Owner Share (%):</label>
                             <input type="number" id="car-owner-share" name="car-owner-share" value="50"
                                 class="form-control disabledByDefault" disabled>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col col-md-6">
                         <div class="form-group">
                             <label for="car-driver-share">Car Driver Share (%):</label>
                             <input type="number" id="car-driver-share" name="car-driver-share" value="50"
@@ -122,9 +119,9 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col col-md-12">
                 <div class="form-group row">
-                    <div class="col-md-12 text-right">
+                    <div class="col col-md-12 text-right">
                         <div class="form-group">
                             <label for="unlock">
                                 <input type="checkbox" id="unlock" name="unlock" onclick="unlockFields()"> Unlock all
@@ -142,7 +139,7 @@
         <div class="fixed-bottom bottomBar">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col col-md-12">
                         <div class="form-group">
                             <input type="button" class="btn btn-primary" value="Calculate" onclick="calculateProfit()">
                             <input id="secButton" type="button" class="btn btn-secondary" value="Load sample"
@@ -158,24 +155,24 @@
 
     <script>
         function calculateProfit() {
-            var grossRevenue = parseFloat(document.getElementById("gross-revenue").value);
+            var gopayRevenue = parseFloat(document.getElementById("gopay-revenue").value);
+            var cashRevenue = parseFloat(document.getElementById("cash-revenue").value) || 0;
             var keptDeposit = parseFloat(document.getElementById("kept-deposit").value) || 0;
             var distanceTravelled = parseFloat(document.getElementById("distance-travelled").value);
             var averageFuelConsumption = parseFloat(document.getElementById("average-fuel-consumption").value);
             var parkingExpense = parseFloat(document.getElementById("parking-expense").value) || 0;
             var tollExpense = parseFloat(document.getElementById("toll-expense").value) || 0;
-            var cashOnDriver = parseFloat(document.getElementById("cash-on-driver").value) || 0;
             var fuelPrice = parseFloat(document.getElementById("fuel-price").value);
             var carMaintenanceCost = parseFloat(document.getElementById("car-maintenance-cost").value);
             var ownerShare = parseFloat(document.getElementById("car-owner-share").value);
             var driverShare = parseFloat(document.getElementById("car-driver-share").value);
 
-            if (isNaN(grossRevenue) || isNaN(distanceTravelled) || isNaN(averageFuelConsumption)) {
+            if (isNaN(gopayRevenue) || isNaN(distanceTravelled) || isNaN(averageFuelConsumption)) {
                 document.getElementById("result").innerHTML = "<div class='alert alert-danger'>Please fill all the fields with valid numbers</div>";
-                if (isNaN(grossRevenue)) {
-                    document.getElementById("gross-revenue").classList.add("is-invalid");
+                if (isNaN(gopayRevenue)) {
+                    document.getElementById("gopay-revenue").classList.add("is-invalid");
                 } else {
-                    document.getElementById("gross-revenue").classList.remove("is-invalid");
+                    document.getElementById("gopay-revenue").classList.remove("is-invalid");
                 }
                 if (isNaN(distanceTravelled)) {
                     document.getElementById("distance-travelled").classList.add("is-invalid");
@@ -190,14 +187,32 @@
                 return;
             }
 
+            var grossRevenue = gopayRevenue + cashRevenue;
+
             var fuelCost = distanceTravelled / averageFuelConsumption * fuelPrice;
             var grossIncome = grossRevenue - fuelCost - keptDeposit - parkingExpense - tollExpense;
             var maintenanceCost = (grossIncome * carMaintenanceCost) / 100;
             var netIncome = grossIncome - maintenanceCost;
+            var fundsOnPocket = gopayRevenue - fuelCost - keptDeposit - maintenanceCost;
             var ownerIncome = (netIncome * ownerShare) / 100;
             var driverIncome = (netIncome * driverShare) / 100;
-            var transferToOwner = ownerIncome + cashOnDriver;
-            var transferToDriver = driverIncome - cashOnDriver;
+
+            var transferToOwnerFromPocket = 0;
+            var transferToDriverFromPocket = 0;
+            var transferToOwnerFromCash = 0;
+            var transferToDriverFromCash = 0;
+
+            if(ownerIncome < fundsOnPocket) {
+                transferToOwnerFromPocket = ownerIncome;
+                transferToOwnerFromCash = 0;
+                transferToDriverFromPocket = fundsOnPocket - ownerIncome;
+                transferToDriverFromCash = driverIncome - transferToDriverFromPocket;
+            } else {
+                transferToOwnerFromPocket = fundsOnPocket;
+                transferToOwnerFromCash = ownerIncome - fundsOnPocket;
+                transferToDriverFromPocket = 0;
+                transferToDriverFromCash = driverIncome;
+            }
 
             const table = document.createElement("table");
             table.classList.add("table");
@@ -219,10 +234,12 @@
 
             const tbody = document.createElement("tbody");
 
+            addRow(tbody, "💰 Gross Revenue", "Rp", addThousandSeparator(grossRevenue));
             addRow(tbody, "⛽ Fuel Cost", "Rp", addThousandSeparator(fuelCost));
-            addRow(tbody, "💰 Gross Income", "Rp", addThousandSeparator(grossIncome));
+            addRow(tbody, "💸 Gross Income", "Rp", addThousandSeparator(grossIncome));
             addRow(tbody, "🛠️ Maintenance Cost", "Rp", addThousandSeparator(maintenanceCost));
             addRow(tbody, "🤑 Net Income", "Rp", addThousandSeparator(netIncome), ["bg-success", "mainInfoRow"]);
+            addRow(tbody, "🏧 Funds on Pocket", "Rp", addThousandSeparator(fundsOnPocket), []);
 
             table.appendChild(tbody);
 
@@ -250,6 +267,7 @@
             const tbody2 = document.createElement("tbody");
             // create row with 3 columns, the first column says "Income", the second column contain Owner income, the third column contain Driver income
             const tr20 = document.createElement("tr");
+            tr20.classList.add("bg-primary", "mainInfoRow");
             const td20 = document.createElement("td");
             td20.textContent = "Income";
             const td21 = document.createElement("td");
@@ -262,17 +280,34 @@
             tbody2.appendChild(tr20);
 
             const tr21 = document.createElement("tr");
-            tr21.classList.add("bg-primary", "mainInfoRow");
-            const td23 = document.createElement("td");
-            td23.textContent = "Transfer to";
-            const td24 = document.createElement("td");
-            td24.textContent = addThousandSeparator(transferToOwner);
-            const td25 = document.createElement("td");
-            td25.textContent = addThousandSeparator(transferToDriver);
-            tr21.appendChild(td23);
-            tr21.appendChild(td24);
-            tr21.appendChild(td25);
+            tr21.classList.add("mainInfoRow");
+            const td211 = document.createElement("td");
+            td211.textContent = "Transfer to";
+            td211.colSpan = 3;
+            const tr22 = document.createElement("tr");
+            const td221 = document.createElement("td");
+            td221.textContent = "From pocket";
+            const td222 = document.createElement("td");
+            td222.textContent = addThousandSeparator(transferToOwnerFromPocket);
+            const td223 = document.createElement("td");
+            td223.textContent = addThousandSeparator(transferToDriverFromPocket);
+            const tr23 = document.createElement("tr");
+            const td231 = document.createElement("td");
+            td231.textContent = "From cash";
+            const td232 = document.createElement("td");
+            td232.textContent = addThousandSeparator(transferToOwnerFromCash);
+            const td233 = document.createElement("td");
+            td233.textContent = addThousandSeparator(transferToDriverFromCash);
+            tr21.appendChild(td211);
+            tr22.appendChild(td221);
+            tr22.appendChild(td222);
+            tr22.appendChild(td223);
+            tr23.appendChild(td231);
+            tr23.appendChild(td232);
+            tr23.appendChild(td233);
             tbody2.appendChild(tr21);
+            tbody2.appendChild(tr22);
+            tbody2.appendChild(tr23);
 
             table2.appendChild(tbody2);
 
@@ -295,7 +330,6 @@
                     averageFuelConsumption: averageFuelConsumption,
                     parkingExpense: parkingExpense,
                     tollExpense: tollExpense,
-                    cashOnDriver: cashOnDriver,
                     fuelPrice: fuelPrice,
                     carMaintenanceCost: carMaintenanceCost,
                     ownerShare: ownerShare,
@@ -354,7 +388,8 @@
         }
 
         function LoadSample() {
-            document.getElementById("gross-revenue").value = 400000;
+            document.getElementById("gopay-revenue").value = 250000;
+            document.getElementById("cash-revenue").value = 150000;
             document.getElementById("distance-travelled").value = 200;
             document.getElementById("average-fuel-consumption").value = 10;
             calculateProfit();
