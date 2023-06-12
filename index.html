@@ -402,17 +402,18 @@
       // share the content with the screenshot as an image
       await navigator.share({
         title: "GoCar Profit",
-        text: `*Result*:
-          Fuel cost: Rp${addThousandSeparator(fuelCost)}
-          Maintenance cost: Rp${addThousandSeparator(maintenanceCost)}
-          Shared Profit: Rp${addThousandSeparator(ownerIncome)}
-          Transfer to Owner from pocket: Rp${addThousandSeparator(transferToOwnerFromPocket)}
-          Transfer to Owner from cash: Rp${addThousandSeparator(transferToOwnerFromCash)}
-          Transfer to Driver from pocket: Rp${addThousandSeparator(transferToDriverFromPocket)}
-          Transfer to Driver from cash: Rp${addThousandSeparator(transferToDriverFromCash)}
+        text: `*===Result (${new Date().toLocaleDateString('en-GB', {day: '2-digit', month: '2-digit', year: 'numeric'})})===*
+*Fuel cost:* Rp${addThousandSeparator(fuelCost)}
+*Maintenance cost:* Rp${addThousandSeparator(maintenanceCost)}
+*Shared Profit:* Rp${addThousandSeparator(ownerIncome)}
+*Transfer to Owner:* 
+    From pocket: Rp${addThousandSeparator(transferToOwnerFromPocket)}
+    from cash: Rp${addThousandSeparator(transferToOwnerFromCash)}
+*Transfer to Driver:* 
+    From pocket: Rp${addThousandSeparator(transferToDriverFromPocket)}
+    From cash: Rp${addThousandSeparator(transferToDriverFromCash)}
 
-          Click the link below to see the full calculation:
-        `,
+Click below to see details:`,
         url: window.location.href,
         // files: [new File([await (await fetch(imageDataUrl)).blob()], "screenshot.png", { type: "image/png" })]
       });
