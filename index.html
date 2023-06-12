@@ -414,7 +414,7 @@
           Click the link below to see the full calculation:
         `,
         url: window.location.href,
-        files: [new File([await (await fetch(imageDataUrl)).blob()], "screenshot.png", { type: "image/png" })]
+        // files: [new File([await (await fetch(imageDataUrl)).blob()], "screenshot.png", { type: "image/png" })]
       });
       console.log("Content shared successfully.");
     } catch (error) {
