@@ -120,7 +120,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row checkBoxRow">
             <div class="col col-md-12">
                 <div class="form-group row">
                     <div class="col col-md-12 text-right">
@@ -154,6 +154,9 @@
     </form>
     <br>
     <div id="result"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.0/html2canvas.min.js"></script>
+
 
     <script>
         function calculateProfit() {
@@ -339,24 +342,87 @@
 
             // add share button to result div
             const shareButton = document.createElement("button");
+            shareButton.classList.add("shareButton");
             shareButton.classList.add("btn");
             shareButton.classList.add("btn-primary");
             shareButton.textContent = "Share Calculation Result";
             shareButton.addEventListener("click", async function () {
                 if (navigator.share) {
-                    try {
-                        await navigator.share({
-                            title: "GoCar Profit",
-                            text: "Here is my calculation for today's GoCar profit:",
-                            url: window.location.href
-                        });
-                        console.log("Content shared successfully.");
-                    } catch (error) {
-                        console.error("Error sharing content:", error);
-                    }
-                } else {
-                    console.warn("Web Share API not supported on this device.");
-                }
+    try {
+      // add custom styles to the elements that will be included in the screenshot
+      const style = document.createElement("style");
+      style.textContent = `
+      body{
+        margin: 10px;
+        padding: 20px;
+      }
+      div#result{
+        margin: 0;
+      }
+        .navbar, .shareButton, .bottomBar, .checkBoxRow {
+          display: none;
+        }
+        .result-table {
+          border-collapse: collapse;
+          margin: 20px;
+        }
+        .result-table th,
+        .result-table td {
+          border: 1px solid black;
+          padding: 5px;
+        }
+      `;
+      document.head.appendChild(style);
+
+      // capture a screenshot of the page using html2canvas
+      const canvas = await html2canvas(document.body, {
+        // use the custom styles when capturing the screenshot
+        useCORS: true,
+        scrollX: 0,
+        scrollY: -window.scrollY,
+        windowWidth: document.documentElement.clientWidth,
+        windowHeight: document.documentElement.clientHeight,
+        scale: 2,
+        backgroundColor: null,
+        logging: true,
+        letterRendering: true,
+        allowTaint: true,
+        foreignObjectRendering: true,
+        onclone: function (cloneDoc) {
+          cloneDoc.querySelectorAll(".result-table").forEach(function (table) {
+            table.classList.add("table");
+            table.classList.add("table-bordered");
+          });
+        }
+      });
+
+      // convert the canvas to a data URL
+      const imageDataUrl = canvas.toDataURL();
+
+      // share the content with the screenshot as an image
+      await navigator.share({
+        title: "GoCar Profit",
+        text: `*Result*:
+          Fuel cost: Rp${addThousandSeparator(fuelCost)}
+          Maintenance cost: Rp${addThousandSeparator(maintenanceCost)}
+          Shared Profit: Rp${addThousandSeparator(ownerIncome)}
+          Transfer to Owner from pocket: Rp${addThousandSeparator(transferToOwnerFromPocket)}
+          Transfer to Owner from cash: Rp${addThousandSeparator(transferToOwnerFromCash)}
+          Transfer to Driver from pocket: Rp${addThousandSeparator(transferToDriverFromPocket)}
+          Transfer to Driver from cash: Rp${addThousandSeparator(transferToDriverFromCash)}
+
+          Click the link below to see the full calculation:
+        `,
+        url: window.location.href,
+        files: [new File([await (await fetch(imageDataUrl)).blob()], "screenshot.png", { type: "image/png" })]
+      });
+      console.log("Content shared successfully.");
+    } catch (error) {
+      console.error("Error sharing content:", error);
+    }
+  } else {
+    console.warn("Web Share API not supported on this device.");
+  }
             });
             document.getElementById("result").appendChild(shareButton);
 
@@ -555,7 +621,34 @@
             calculateProfit();
         }
 
+
+        
+
+
     </script>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-analytics.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: "AIzaSyD93ywEtZFVddul9WleIRofZt7353MzpWU",
+          authDomain: "gocarcalc.firebaseapp.com",
+          projectId: "gocarcalc",
+          storageBucket: "gocarcalc.appspot.com",
+          messagingSenderId: "1057068768631",
+          appId: "1:1057068768631:web:894ac29de883c4fe00d572",
+          measurementId: "G-ZFQT7HZ1N7"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+      </script>
 </body>
 
 </html>
