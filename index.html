@@ -19,20 +19,23 @@
         <h4 class="navbar-text">🚗</h4>
     </nav>
     <form id="mainForm">
-        <div class="row" style="display: flex;">
-            <div class="col col-md-6">
-                <div class="form-group">
-                    <label for="gopayRevenue">Gopay Revenue (Rp):</label>
-                    <input type="number" id="gopayRevenue" name="gopayRevenue" class="form-control" placeholder="e.g 250000">
+        <fieldset>
+            <legend>Revenue (Rp)</legend>
+            <div class="row" style="display: flex;">
+                <div class="col col-md-6">
+                    <div class="form-group">
+                        <label for="gopayRevenue">Gopay:</label>
+                        <input type="number" id="gopayRevenue" name="gopayRevenue" class="form-control" placeholder="e.g 250000">
+                    </div>
+                </div>
+                <div class="col col-md-6">
+                    <div class="form-group">
+                        <label for="cashRevenue">Cash:</label>
+                        <input type="number" id="cashRevenue" name="cashRevenue" class="form-control" placeholder="e.g 150000">
+                    </div>
                 </div>
             </div>
-            <div class="col col-md-6">
-                <div class="form-group">
-                    <label for="cashRevenue">Cash Revenue (Rp):</label>
-                    <input type="number" id="cashRevenue" name="cashRevenue" class="form-control" placeholder="e.g 150000">
-                </div>
-            </div>
-        </div>
+        </fieldset>
         <div class="row">
             <div class="col col-md-12">
                 <div class="form-group">
@@ -73,14 +76,14 @@
             <div class="col col-md-6">
                 <div class="form-group">
                     <label for="parkingExpense">Parking Expense:</label>
-                    <input type="number" id="parkingExpense" name="parkingExpense" class="form-control"
+                    <input type="number" id="parkingExpense" name="parkingExpense" class="form-control disabledByDefault"
                         placeholder="e.g 10000" disabled>
                 </div>
             </div>
             <div class="col col-md-6">
                 <div class="form-group">
                     <label for="tollExpense">Toll Expense:</label>
-                    <input type="number" id="tollExpense" name="tollExpense" class="form-control"
+                    <input type="number" id="tollExpense" name="tollExpense" class="form-control disabledByDefault"
                         placeholder="e.g 5000" disabled>
                 </div>
             </div>
@@ -163,6 +166,9 @@
 
 
     <script>
+        // set value for averageFuelConsumption field to a random number between 11.1 and 30.0
+        document.getElementById("averageFuelConsumption").value = (Math.floor(Math.random() * 19) + 111) / 10;
+
         function calculateProfit() {
             var gopayRevenue = parseFloat(document.getElementById("gopayRevenue").value);
             var tips = parseFloat(document.getElementById("tips").value) || 0;
