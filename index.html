@@ -31,6 +31,14 @@
         <div class="row">
             <div class="col col-md-12">
                 <div class="form-group">
+                    <label for="tips">Tips (Rp):</label>
+                    <input type="number" id="tips" name="tips" class="form-control" placeholder="e.g 20000">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col col-md-12">
+                <div class="form-group">
                     <label for="cashRevenue">Cash Revenue (Rp):</label>
                     <input type="number" id="cashRevenue" name="cashRevenue" class="form-control"
                         placeholder="e.g 150000">
@@ -70,14 +78,14 @@
                 <div class="form-group">
                     <label for="parkingExpense">Parking Expense:</label>
                     <input type="number" id="parkingExpense" name="parkingExpense" class="form-control"
-                        placeholder="e.g 10000">
+                        placeholder="e.g 10000" disabled>
                 </div>
             </div>
             <div class="col col-md-6">
                 <div class="form-group">
                     <label for="tollExpense">Toll Expense:</label>
                     <input type="number" id="tollExpense" name="tollExpense" class="form-control"
-                        placeholder="e.g 5000">
+                        placeholder="e.g 5000" disabled>
                 </div>
             </div>
         </div>
@@ -161,6 +169,7 @@
     <script>
         function calculateProfit() {
             var gopayRevenue = parseFloat(document.getElementById("gopayRevenue").value);
+            var tips = parseFloat(document.getElementById("tips").value) || 0;
             var cashRevenue = parseFloat(document.getElementById("cashRevenue").value) || 0;
             var keptDeposit = parseFloat(document.getElementById("keptDeposit").value) || 0;
             var distanceTravelled = parseFloat(document.getElementById("distanceTravelled").value);
@@ -192,7 +201,7 @@
                 return;
             }
 
-            var grossRevenue = gopayRevenue + cashRevenue;
+            var grossRevenue = gopayRevenue - tips + cashRevenue;
 
             var fuelCost = distanceTravelled / averageFuelConsumption * fuelPrice;
             var grossIncome = grossRevenue - fuelCost - keptDeposit - parkingExpense - tollExpense;
